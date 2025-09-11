@@ -1,5 +1,6 @@
 # 🧠 4chan Toxicity Analysis  
 **Yang Lab Screening Task – September 2025**
+#*[⚠️ This README is a work in progress. Final documentation will be updated before submission.]*
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
 ![Git](https://img.shields.io/badge/Version%20Control-Git-orange?logo=git)
