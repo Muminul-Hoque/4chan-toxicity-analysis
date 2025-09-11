@@ -17,6 +17,7 @@ The project demonstrates proficiency in **ethical social media data collection, 
 ---
 
 ## 📁 Repository Structure
+```
 ├── data_collection.py           # Scrapes raw posts from /pol/ using 4chan’s JSON API
 ├── processing.py                # Cleans and structures raw post data
 ├── api_integration.py           # Enriches posts with toxicity scores from OpenAI & Perspective APIs
@@ -27,7 +28,7 @@ The project demonstrates proficiency in **ethical social media data collection, 
 ├── requirements.txt             # Project dependencies
 ├── README.md                    # Project documentation
 
-
+```
 ---
 
 ## ⚙️ Setup Instructions
