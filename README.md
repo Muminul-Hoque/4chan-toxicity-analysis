@@ -25,7 +25,7 @@ The project demonstrates proficiency in **ethical social media data collection, 
 ├── pol_posts_with_scores.json   # Posts enriched with API scores
 ├── report.pdf                   # Final research report
 ├── requirements.txt             # Project dependencies
-└── README.md                    # Project documentation
+├── README.md                    # Project documentation
 
 
 ---
