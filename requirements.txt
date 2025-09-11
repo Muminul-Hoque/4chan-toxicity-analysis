@@ -1,0 +1,9 @@
+openai
+requests
+python-dotenv
+beautifulsoup4
+pandas
+numpy
+matplotlib
+seaborn
+scipy
