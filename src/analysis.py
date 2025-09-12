@@ -5,6 +5,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import pearsonr, spearmanr, ttest_ind, chi2_contingency
 from datetime import datetime
+from sklearn.metrics import confusion_matrix, precision_recall_fscore_support
+
 
 # ===== CONFIG =====
 INPUT_FILE = "pol_posts_with_scores.json"
@@ -163,6 +165,39 @@ plt.title("Agreement/Disagreement Matrix")
 plt.tight_layout()
 plt.savefig("agreement_matrix.png", dpi=300)
 plt.close()
+
+
+# Confusion matrix with sklearn (Perspective = y_true, OpenAI = y_pred)
+cm = confusion_matrix(df["persp_flag"], df["openai_flag"], labels=[False, True])
+cm_df = pd.DataFrame(cm, 
+                     index=["Perspective: Non-toxic", "Perspective: Toxic"], 
+                     columns=["OpenAI: Non-toxic", "OpenAI: Toxic"])
+print("\n=== Confusion Matrix (sklearn order) ===")
+print(cm_df)
+
+# Save confusion matrix to CSV/Markdown
+cm_df.to_csv("confusion_matrix.csv")
+cm_df.to_markdown("confusion_matrix.md")
+
+# Precision, Recall, F1
+precision, recall, f1, support = precision_recall_fscore_support(
+    df["persp_flag"], df["openai_flag"], average=None, labels=[False, True]
+)
+
+metrics_df = pd.DataFrame({
+    "Class": ["Non-toxic", "Toxic"],
+    "Precision": precision,
+    "Recall": recall,
+    "F1-score": f1,
+    "Support": support
+})
+print("\n=== Precision/Recall/F1 Table ===")
+print(metrics_df.to_string(index=False))
+
+# Save metrics to CSV/Markdown
+metrics_df.to_csv("precision_recall_table.csv", index=False)
+metrics_df.to_markdown("precision_recall_table.md", index=False)
+
 
 # ===== 2B. DISAGREEMENT BY CONTENT TYPE =====
 df["disagreement"] = df["openai_flag"] != df["persp_flag"]
