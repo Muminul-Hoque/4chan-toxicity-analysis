@@ -18,15 +18,61 @@ The project demonstrates proficiency in **ethical social media data collection, 
 
 ## 📁 Repository Structure
 ```
-├── data_collection.py           # Scrapes raw posts from /pol/ using 4chan’s JSON API
-├── processing.py                # Cleans and structures raw post data
-├── api_integration.py           # Enriches posts with toxicity scores from OpenAI & Perspective APIs
-├── analysis.ipynb               # Statistical comparison and visualization of toxicity scores
-├── pol_posts.json               # Cleaned post data (OPs and replies)
-├── pol_posts_with_scores.json   # Posts enriched with API scores
-├── report.pdf                   # Final research report
-├── requirements.txt             # Project dependencies
-├── README.md                    # Project documentation
+4chan-toxicity-analysis/
+├── 4chan_toxicity_research_report_Muhamed_Muminul_Hoque.pdf
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── .gitignore
+│
+├── data/
+│   ├── pol_posts_raw.json
+│   ├── pol_posts.json
+│   └── pol_posts_with_scores.json
+│
+├── src/
+│   └── main.py
+|   └── data_collection.py           
+|   └── processing.py                
+|   └── api_integration.py
+│   └── analysis.py        
+│
+├── results/                          # Visual outputs from analysis
+│   ├── correlation_heatmap.png
+│   ├── agreement_matrix.png
+│   ├── toxicity_distributions.png
+│   ├── openai_toxicity_distribution.png
+│   ├── openai_hate_distribution.png
+│   ├── openai_sexual_distribution.png
+│   ├── openai_self-harm_distribution.png
+│   ├── openai_violence_distribution.png
+│   ├── openai_harassment_distribution.png
+│   ├── openai_harassment_threatening_distribution.png
+│   ├── openai_hate_threatening_distribution.png
+│   ├── openai_self-harm_intent_distribution.png
+│   ├── openai_sexual_minors_distribution.png
+│   ├── openai_violence_graphic_distribution.png
+│   ├── persp_toxicity_distribution.png
+│   ├── persp_identity_attack_distribution.png
+│   ├── persp_insult_distribution.png
+│   ├── persp_threat_distribution.png
+│   ├── persp_severe_toxicity_distribution.png
+│   ├── persp_obscene_distribution.png
+│   ├── persp_profanity_distribution.png
+│   ├── persp_sexually_explicit_distribution.png
+│   ├── persp_spam_distribution.png
+│   ├── persp_flirtation_distribution.png
+│
+├── tables/
+│   ├── disagreement_by_op.csv
+│   ├── disagreement_by_country.csv
+│   ├── disagreement_by_subject.csv
+│   ├── disagreement_by_op.md
+│   ├── disagreement_by_country.md
+│   └── disagreement_by_subject.md
+│
+├── summary/
+│   └── analysis_summary.json
 
 ```
 ---
