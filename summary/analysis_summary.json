@@ -1,0 +1,67 @@
+{
+  "pearson_corr": 0.7454051270656681,
+  "pearson_p": 0.0,
+  "spearman_corr": 0.8200700605729406,
+  "spearman_p": 0.0,
+  "agreement_rate": 0.8208605220228385,
+  "false_positive_rate": 12.38784665579119,
+  "false_negative_rate": 5.5261011419249595,
+  "t_test": {
+    "t_stat": 31.37644309673154,
+    "p_value": 4.718393138368403e-208
+  },
+  "chi_square": {
+    "chi2": 3757.748121366909,
+    "p_value": 0.0
+  },
+  "op_disagreement_rate": {
+    "false": 17.851566566045594,
+    "true": 20.8955223880597
+  },
+  "country_disagreement_rate": {
+    "AU": 19.05829596412556,
+    "BR": 21.518987341772153,
+    "CA": 18.74062968515742,
+    "DE": 13.0,
+    "FI": 16.071428571428573,
+    "GB": 14.285714285714285,
+    "MX": 16.049382716049383,
+    "PL": 16.216216216216218,
+    "RU": 22.018348623853214,
+    "US": 17.87220240025949
+  },
+  "subject_disagreement_rate": {
+    "PRONOUNCED DEAD": 0.0,
+    "Say what you will about him, but what have you accomplished?": 0.0,
+    "Welcome to /pol/ - Politically Incorrect": 0.0,
+    "Who&#039;s next?": 0.0,
+    "Why the fuck are you liars calling Charlie Kirk a moderate?": 100.0
+  },
+  "category_correlations": [
+    {
+      "openai": "openai_hate",
+      "perspective": "persp_identity_attack",
+      "pearson": 0.805,
+      "spearman": 0.826
+    },
+    {
+      "openai": "openai_violence",
+      "perspective": "persp_threat",
+      "pearson": 0.727,
+      "spearman": 0.818
+    },
+    {
+      "openai": "openai_harassment",
+      "perspective": "persp_insult",
+      "pearson": 0.825,
+      "spearman": 0.854
+    },
+    {
+      "openai": "openai_sexual",
+      "perspective": "persp_sexually_explicit",
+      "pearson": 0.554,
+      "spearman": 0.346
+    }
+  ],
+  "generated_at": "2025-09-12T03:13:57.997460Z"
+}
