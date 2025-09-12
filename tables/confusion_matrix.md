@@ -1,0 +1,4 @@
+|                        |   OpenAI: Non-toxic |   OpenAI: Toxic |
+|:-----------------------|--------------------:|----------------:|
+| Perspective: Non-toxic |                5417 |            1215 |
+| Perspective: Toxic     |                 542 |            2634 |
