@@ -80,11 +80,13 @@ category_mapping = {
 correlation_results = []
 for openai_col, persp_col in category_mapping.items():
     if openai_col in df.columns and persp_col in df.columns:
-        o_scores = df[openai_col].dropna()
-        p_scores = df[persp_col].dropna()
-        if len(o_scores) > 0 and len(p_scores) > 0:
-            pearson, _ = pearsonr(o_scores, p_scores)
-            spearman, _ = spearmanr(o_scores, p_scores)
+        # Drop rows where either column is NaN
+        subset = df[[openai_col, persp_col]].dropna()
+
+        # Only proceed if we have at least 2 paired values
+        if len(subset) >= 2:
+            pearson, _ = pearsonr(subset[openai_col], subset[persp_col])
+            spearman, _ = spearmanr(subset[openai_col], subset[persp_col])
             correlation_results.append({
                 "openai": openai_col,
                 "perspective": persp_col,
@@ -92,20 +94,57 @@ for openai_col, persp_col in category_mapping.items():
                 "spearman": round(spearman, 3)
             })
 
+
 print("\n=== Category-Wise Correlation Analysis ===")
 for result in correlation_results:
     print(f"{result['openai']} vs {result['perspective']}: "
           f"Pearson={result['pearson']}, Spearman={result['spearman']}")
 
 # ===== DISTRIBUTIONS FOR ALL CATEGORIES =====
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.set_theme(style="whitegrid")  # professional style
+
 for col in df.columns:
     if col.startswith("openai_") or col.startswith("persp_"):
-        plt.figure(figsize=(6,4))
-        sns.histplot(df[col], kde=True)
-        plt.title(f"{col} Score Distribution")
+        # Ensure numeric and drop NaNs
+        series = pd.to_numeric(df[col], errors="coerce").dropna()
+
+        # Skip empty columns
+        if len(series) == 0:
+            continue
+
+        plt.figure(figsize=(6, 4))
+
+        # KDE only if >= 2 values
+        if len(series) >= 2:
+            sns.histplot(series, kde=True, color="#4C72B0", edgecolor="black")
+        else:
+            sns.histplot(series, kde=False, color="#4C72B0", edgecolor="black")
+
+        # Add mean & median lines
+        plt.axvline(series.mean(), color="red", linestyle="--", linewidth=1.2,
+                    label=f"Mean: {series.mean():.2f}")
+        plt.axvline(series.median(), color="green", linestyle=":", linewidth=1.2,
+                    label=f"Median: {series.median():.2f}")
+
+        # Titles & labels
+        plt.title(f"{col.replace('_', ' ').title()} Score Distribution",
+                  fontsize=14, weight="bold")
+        plt.xlabel("Score", fontsize=12)
+        plt.ylabel("Frequency", fontsize=12)
+        plt.legend()
+
+        # Save high‑res for report
         plt.tight_layout()
         plt.savefig(f"{col}_distribution.png", dpi=300)
         plt.close()
+
+
+
+
 
 # ===== 2. AGREEMENT/DISAGREEMENT =====
 threshold = 0.5
@@ -164,16 +203,43 @@ country_disagree_rate.to_frame("Disagreement %").to_markdown("disagreement_by_co
 subject_disagree_rate.to_frame("Disagreement %").to_markdown("disagreement_by_subject.md")
 
 # ===== 3. CATEGORY-WISE DISTRIBUTION =====
-plt.figure(figsize=(8,5))
-sns.histplot(df["persp_toxicity"], color="red", label="Perspective", kde=True)
-sns.histplot(df["openai_toxicity"], color="blue", label="OpenAI", kde=True)
-plt.legend()
+
+sns.set_theme(style="whitegrid")
+
+# Clean and validate data
+persp_series = pd.to_numeric(df["persp_toxicity"], errors="coerce").dropna()
+openai_series = pd.to_numeric(df["openai_toxicity"], errors="coerce").dropna()
+
+plt.figure(figsize=(8, 5))
+
+# Plot Perspective
+if len(persp_series) >= 2:
+    sns.histplot(persp_series, color="red", label="Perspective", kde=True, edgecolor="black")
+else:
+    sns.histplot(persp_series, color="red", label="Perspective", kde=False, edgecolor="black")
+
+# Plot OpenAI
+if len(openai_series) >= 2:
+    sns.histplot(openai_series, color="blue", label="OpenAI", kde=True, edgecolor="black")
+else:
+    sns.histplot(openai_series, color="blue", label="OpenAI", kde=False, edgecolor="black")
+
+# Legend and labels
+plt.legend(loc="upper right")
 plt.xlabel("Toxicity Score")
 plt.ylabel("Frequency")
 plt.title("Toxicity Score Distributions")
+
+# Sample size annotation
+plt.text(0.95, 0.95, f"n = {len(df)}",
+         transform=plt.gca().transAxes,
+         ha="right", va="top", fontsize=10, color="gray")
+
+# Save high-res output
 plt.tight_layout()
-plt.savefig("toxicity_distributions.png", dpi=300)
+plt.savefig("toxicity_distributions.png", dpi=300, bbox_inches="tight")
 plt.close()
+
 
 # ===== 4. STATISTICAL SIGNIFICANCE TESTING =====
 t_stat, t_p = ttest_ind(df["openai_toxicity"].dropna(), df["persp_toxicity"].dropna(), equal_var=False)
@@ -209,3 +275,4 @@ with open("analysis_summary.json", "w", encoding="utf-8") as f:
     json.dump(summary, f, indent=2)
 
 print("\n✅ Analysis complete. Plots saved as PNG, CSV + Markdown tables saved, summary saved to analysis_summary.json")
+exit(0)
