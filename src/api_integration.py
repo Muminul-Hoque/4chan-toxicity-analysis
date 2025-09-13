@@ -2,10 +2,15 @@ from dotenv import load_dotenv
 import os, json, time, requests, random
 from openai import OpenAI
 
-# ===== CONFIGURATION =====
-INPUT_FILE = "pol_posts.json"   # from processing.py
-OUTPUT_FILE = "pol_posts_with_scores.json"
+# ===== PATHS =====
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
 
+INPUT_FILE = os.path.join(DATA_DIR, "pol_posts.json")   # from processing.py
+OUTPUT_FILE = os.path.join(DATA_DIR, "pol_posts_with_scores.json")
+
+# ===== API KEYS =====
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PERSPECTIVE_API_KEY = os.getenv("PERSPECTIVE_API_KEY")
@@ -26,7 +31,6 @@ def get_openai_moderation(text):
         print(f"[ERROR] OpenAI Moderation failed: {e}")
         return None
 
-
 # ===== GOOGLE PERSPECTIVE API =====
 def get_perspective_scores(text):
     if not text.strip():
@@ -37,8 +41,9 @@ def get_perspective_scores(text):
             "comment": {"text": text},
             "languages": ["en"],
             "requestedAttributes": {
-                "TOXICITY": {}, "SEVERE_TOXICITY": {}, "INSULT": {}, "PROFANITY": {}, "THREAT": {},"IDENTITY_ATTACK": {}, "SEXUALLY_EXPLICIT": {}, "FLIRTATION": {}, "SPAM": {}, "OBSCENE": {}
-                }
+                "TOXICITY": {}, "SEVERE_TOXICITY": {}, "INSULT": {}, "PROFANITY": {}, "THREAT": {},
+                "IDENTITY_ATTACK": {}, "SEXUALLY_EXPLICIT": {}, "FLIRTATION": {}, "SPAM": {}, "OBSCENE": {}
+            }
         }
         r = requests.post(url, json=body, timeout=10)
         r.raise_for_status()
@@ -59,8 +64,6 @@ def safe_call(func, *args, retries=3):
             print(f"[WARN] {func.__name__} failed (attempt {i+1}): {e}")
             time.sleep((2 ** i) + random.random())
     return None
-
-
 
 # ===== Internet Connectivity Check =====
 def is_connected():
@@ -122,8 +125,7 @@ def run_api_analysis():
                 openai_scores.get("violence", 0),
                 openai_scores.get("sexual", 0),
                 openai_scores.get("self-harm", 0)
-                ])
-
+            ])
 
             # Check internet before Perspective call
             while not is_connected():
@@ -135,12 +137,12 @@ def run_api_analysis():
 
             # ✅ Perspective toxicity extraction
             persp_toxicity = perspective_result.get("TOXICITY") if perspective_result else None
-            
+
             # 🔍 Debug print for first few posts
             if idx <= 3:
                 print(f"\n🔍 OpenAI response for post {post_id}:\n", json.dumps(openai_result, indent=2))
                 print(f"\n🔍 Perspective response for post {post_id}:\n", json.dumps(perspective_result, indent=2))
-                
+
             # ✅ Count and warn if scores are missing
             if openai_toxicity is None or persp_toxicity is None:
                 print(f"[WARN] Missing toxicity scores for post {post_id}")
@@ -170,4 +172,3 @@ def run_api_analysis():
 
 if __name__ == "__main__":
     run_api_analysis()
-
