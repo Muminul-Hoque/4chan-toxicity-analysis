@@ -1,8 +1,6 @@
 # 🧠 4chan Toxicity Analysis  
 **Yang Lab Screening Task – September 2025**
 
-# *[⚠️ This README is a work in progress. Final documentation will be updated before submission.]*
-
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
 ![Git](https://img.shields.io/badge/Version%20Control-Git-orange?logo=git)
 ![OpenAI API](https://img.shields.io/badge/API-OpenAI-green?logo=openai)
@@ -10,21 +8,20 @@
 ![License](https://img.shields.io/badge/License-MIT-success)
  
 
-This repository contains a complete pipeline for analyzing toxicity patterns on 4chan’s politically incorrect board (/pol/) using two automated content moderation systems: **OpenAI’s Moderation API** and **Google’s Perspective API**.  
+## 📖 Project Overview
+This repository presents a **complete research pipeline** for analyzing toxic speech patterns on 4chan’s politically incorrect board (/pol/). The system combines two widely used automated moderation frameworks:  
 
-The project demonstrates proficiency in **ethical social media data collection, API integration, statistical analysis, version control, and technical reporting** — core competencies for research in the Yang Lab.  
+- **OpenAI Moderation API** (context-sensitive, neural moderation)  
+- **Google Perspective API** (linguistic toxicity scoring across categories)  
+
+The pipeline was designed to demonstrate **end-to-end research competencies**: ethical data collection, API integration, quantitative analysis, visualization, and reproducible reporting — all aligned with the expectations for computational social science in the **Yang Lab**.  
 
 ---
+
 
 ## 📁 Repository Structure
 ```
 4chan-toxicity-analysis/
-├── 4chan_toxicity_research_report_Muhamed_Muminul_Hoque.pdf
-├── README.md
-├── LICENSE
-├── requirements.txt
-├── .gitignore
-│
 ├── data/
 │   ├── pol_posts_raw.json
 │   ├── pol_posts.json
@@ -70,10 +67,17 @@ The project demonstrates proficiency in **ethical social media data collection, 
 │   ├── disagreement_by_op.md
 │   ├── disagreement_by_country.md
 │   └── disagreement_by_subject.md
+│   └── precision_recall_table.md
+│   └── precision_recall_table.md
 │
 ├── summary/
 │   └── analysis_summary.json
-
+├── 4chan_toxicity_research_report_Muhamed_Muminul_Hoque.pdf
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── .gitignore
+│
 ```
 ---
 
@@ -84,74 +88,91 @@ The project demonstrates proficiency in **ethical social media data collection, 
 git clone https://github.com/muminul-hoque/4chan-toxicity-analysis.git
 cd 4chan-toxicity-analysis
 ```
-### 2. Create a virtual environment
+## 2. Configure API keys:
+Create a .env file in the root directory:
+```env
+OPENAI_API_KEY=your_openai_api_key
+PERSPECTIVE_API_KEY=your_google_perspective_api_key
+```
+### 3. Create a virtual environment
 #### For Linux/macOS:
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 #### For Windows:
-```bash
+```
 python -m venv venv
 venv\Scripts\activate
 ```
-## 3. Install dependencies:
-```bash
+## 4. Install dependencies:
+```
 pip install -r requirements.txt
 ```
-## 4. Configure API keys
-Create a .env file in the root directory:
-```env
-OPENAI_API_KEY=your_openai_api_key
-PERSPECTIVE_API_KEY=your_google_perspective_api_key
+
+## 5. Run the pipeline:
 ```
-## 📊 Methodology Overview
+python src/main.py
+```
+## 📊 Methodology  
 
-### 🔹 Data Collection
-- Scraped 5,000–10,000 posts from /pol/ using 4chan’s public JSON API  
-- Implemented rate limiting (1 request/sec), duplicate filtering, and metadata extraction  
-- Stored structured data in JSON format for reproducibility  
+### 🔹 Data Collection  
+- Scraped **5,000–10,000 posts** from `/pol/` using 4chan’s JSON API  
+- Implemented **rate limiting (1 request/sec)** and **duplicate filtering**  
+- Stored structured JSON for reproducibility  
 
-### 🔹 API Integration
-- Queried OpenAI Moderation API and Google Perspective API for each post  
-- Extracted toxicity scores and flags across multiple categories  
-- Implemented retry logic, error handling, and checkpointing for robustness  
+### 🔹 Preprocessing  
+- Removed **HTML tags** and normalized whitespace  
+- Filtered trivial/empty comments (<10 chars)  
+- Produced a curated dataset ready for moderation scoring  
 
-### 🔹 Comparative Analysis
-- Correlation analysis between API scores  
-- Agreement/disagreement pattern identification  
-- Category-wise toxicity distribution  
-- Statistical significance testing  
-- Visualizations using `matplotlib` and `seaborn`  
+### 🔹 API Integration  
+- Queried **OpenAI Moderation API** and **Google Perspective API**  
+- Extracted toxicity scores across multiple dimensions (**hate, harassment, sexual, threats, profanity**)  
+- Implemented **retry logic, error handling, and checkpointing**  
 
----
-
-## 🔍 Research Questions
-- How well do OpenAI and Perspective APIs agree on toxicity detection?  
-- Which content categories show the highest disagreement?  
-- Which API is more sensitive to specific toxic behaviors?  
-- What patterns emerge in false positive/negative classifications?  
+### 🔹 Comparative Analysis  
+- Performed **Pearson & Spearman correlations**  
+- Built **agreement/disagreement matrices**  
+- Generated **category-wise toxicity distributions**  
+- Applied **statistical significance tests**  
 
 ---
 
-## 🤖 Generative AI Usage Statement
-This project leveraged **Microsoft Copilot** to assist with:
-- Code debugging and optimization  
-- README and documentation drafting  
-- Statistical analysis planning  
-- Report structuring and phrasing  
-
-All AI-generated content was reviewed, validated, and integrated manually. The use of generative AI tools was limited to support tasks and did not replace original analytical work.
+## 🔍 Research Questions  
+- How consistent are OpenAI and Perspective in detecting toxic speech?  
+- Which categories show the **largest disagreement**?  
+- Do the systems capture **different toxicity dimensions**?  
+- What methodological challenges arise when combining moderation APIs?  
 
 ---
 
-## 🔐 Notes on Ethics and Privacy
-- All data collected from 4chan was publicly accessible and gathered in accordance with platform guidelines.  
-- API keys and sensitive credentials are excluded from the repository.  
-- Toxicity analysis was conducted for research purposes only and does not reflect endorsement or judgment of any individual content.
+## 📑 Deliverables  
+- **Report**: `4chan_toxicity_research_report_Muhamed_Muminul_Hoque.pdf`  
+- **Visual Outputs**: `/results/`  
+- **Tabular Results**: `/tables/`  
+- **Summary JSON**: `/summary/analysis_summary.json`  
+
+---
+
+## 🤖 Generative AI Usage  
+This project used **Microsoft Copilot** and **OpenAI ChatGPT** for:  
+- Debugging assistance  
+- Documentation drafting  
+- Statistical workflow suggestions  
+
+All AI outputs were **reviewed and validated**. Analysis, interpretation, and reporting are **original work**.  
+
+---
+
+## 🔐 Ethics & Privacy  
+- Data collected from **public 4chan endpoints** following platform rules  
+- No private user data accessed or stored  
+- Toxicity analysis conducted **solely for research**  
+- API keys and credentials are **excluded from version control**  
 
 ---
 
 ## 📬 Contact
-For questions or collaboration, please reach out via GitHub or email:  
+For questions or collaboration, please reach out via email:  
 **yang3kc@gmail.com** **muminul951@gmail.com**
