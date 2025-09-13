@@ -149,11 +149,31 @@ if not args.fast:
             plt.savefig(os.path.join(RESULTS_DIR, f"{col}_distribution.png"), dpi=300)
             plt.close()
     logger.info("Saved all distributions")
+    
+    # Combined toxicity score distribution
+    plt.figure(figsize=(6, 4))
+    sns.histplot(df["openai_toxicity"], kde=True, color="#4C72B0", edgecolor="black", label="OpenAI", alpha=0.5)
+    sns.histplot(df["persp_toxicity"], kde=True, color="#E24A33", edgecolor="black", label="Perspective", alpha=0.5)
+    plt.axvline(df["openai_toxicity"].mean(), color="#4C72B0", linestyle="--", linewidth=1.2,
+                label=f"OpenAI Mean: {df['openai_toxicity'].mean():.2f}")
+    plt.axvline(df["persp_toxicity"].mean(), color="#E24A33", linestyle="--", linewidth=1.2,
+                label=f"Perspective Mean: {df['persp_toxicity'].mean():.2f}")
+    plt.title("Toxicity Score Distributions", fontsize=14, weight="bold")
+    plt.xlabel("Score")
+    plt.ylabel("Frequency")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(os.path.join(RESULTS_DIR, "toxicity_distributions.png"), dpi=300)
+    plt.close()
+    logger.info("Saved toxicity_distributions.png")
 
 # ===== AGREEMENT/DISAGREEMENT =====
 threshold = 0.5
 df["openai_flag"] = df["openai_toxicity"] >= threshold
 df["persp_flag"] = df["persp_toxicity"] >= threshold
+
+# True if APIs disagree on this post
+df["disagreement"] = df["openai_flag"] != df["persp_flag"]
 
 conf_matrix = pd.crosstab(df["openai_flag"], df["persp_flag"])
 plt.figure(figsize=(4, 3))
@@ -188,7 +208,8 @@ logger.info("Saved precision/recall tables")
 
 # Breakdown: OP vs reply
 df["is_op"] = df["thread_id"] == df["post_id"]
-op_disagree_rate = df.groupby("is_op")["openai_flag"].mean() * 100
+op_disagree_rate = df.groupby("is_op")["disagreement"].mean() * 100
+
 op_disagree_rate.to_csv(os.path.join(TABLES_DIR, "disagreement_by_op.csv"))
 op_disagree_rate.to_frame("Disagreement %").to_markdown(os.path.join(TABLES_DIR, "disagreement_by_op.md"))
 logger.info("Saved OP vs reply disagreement")
@@ -197,8 +218,12 @@ logger.info("Saved OP vs reply disagreement")
 df["country"] = df["metadata"].apply(lambda m: m.get("country") if isinstance(m, dict) else None)
 country_counts = df["country"].value_counts()
 valid_countries = country_counts[country_counts >= 25].index
-country_disagree = (df[df["country"].isin(valid_countries)]
-                    .groupby("country")["openai_flag"].mean().sort_values(ascending=False) * 100)
+country_disagree = (
+    df[df["country"].isin(valid_countries)]
+    .groupby("country")["disagreement"].mean()
+    .sort_values(ascending=False) * 100
+)
+
 country_disagree.to_csv(os.path.join(TABLES_DIR, "disagreement_by_country.csv"))
 country_disagree.to_frame("Disagreement %").to_markdown(os.path.join(TABLES_DIR, "disagreement_by_country.md"))
 logger.info("Saved country disagreement")
@@ -211,20 +236,21 @@ chi2, chi_p, _, _ = chi2_contingency(conf_matrix)
 
 summary = {
     "pearson_corr": pearson_corr,
-    "pearson_ci": pearson_ci,
+    "pearson_r_ci": pearson_ci,   
     "spearman_corr": spearman_corr,
     "spearman_p": spearman_p,
     "agreement_rate": (df["openai_flag"] == df["persp_flag"]).mean(),
     "false_positive_rate": (df["openai_flag"] & ~df["persp_flag"]).mean() * 100,
     "false_negative_rate": (~df["openai_flag"] & df["persp_flag"]).mean() * 100,
     "t_test": {"t_stat": t_stat, "p_value": t_p},
-    "cohens_d": cohens_d,
+    "cohen_d": cohens_d,          
     "chi_square": {"chi2": chi2, "p_value": chi_p},
     "op_disagreement_rate": op_disagree_rate.to_dict(),
     "country_disagreement_rate": country_disagree.to_dict(),
     "category_correlations": correlation_results,
     "generated_at": datetime.utcnow().isoformat() + "Z"
 }
+
 
 with open(os.path.join(SUMMARY_DIR, "analysis_summary.json"), "w", encoding="utf-8") as f:
     json.dump(summary, f, indent=2)
