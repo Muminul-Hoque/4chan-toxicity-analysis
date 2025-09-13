@@ -1,41 +1,51 @@
 {
   "pearson_corr": 0.7454051270656681,
-  "pearson_p": 0.0,
+  "pearson_ci": [
+    0.7364787310009258,
+    0.7540719773820869
+  ],
   "spearman_corr": 0.8200700605729406,
   "spearman_p": 0.0,
   "agreement_rate": 0.8208605220228385,
   "false_positive_rate": 12.38784665579119,
   "false_negative_rate": 5.5261011419249595,
   "t_test": {
-    "t_stat": 31.37644309673154,
-    "p_value": 4.718393138368403e-208
+    "t_stat": 43.76059013571368,
+    "p_value": 0.0
   },
+  "cohens_d": 0.4418683971111894,
   "chi_square": {
     "chi2": 3757.748121366909,
     "p_value": 0.0
   },
   "op_disagreement_rate": {
-    "false": 17.851566566045594,
-    "true": 20.8955223880597
+    "false": 39.335900905589675,
+    "true": 34.82587064676617
   },
   "country_disagreement_rate": {
-    "AU": 19.05829596412556,
-    "BR": 21.518987341772153,
-    "CA": 18.74062968515742,
-    "DE": 13.0,
-    "FI": 16.071428571428573,
-    "GB": 14.285714285714285,
-    "MX": 16.049382716049383,
-    "PL": 16.216216216216218,
-    "RU": 22.018348623853214,
-    "US": 17.87220240025949
-  },
-  "subject_disagreement_rate": {
-    "PRONOUNCED DEAD": 0.0,
-    "Say what you will about him, but what have you accomplished?": 0.0,
-    "Welcome to /pol/ - Politically Incorrect": 0.0,
-    "Who&#039;s next?": 0.0,
-    "Why the fuck are you liars calling Charlie Kirk a moderate?": 100.0
+    "NO": 66.66666666666666,
+    "IT": 55.55555555555556,
+    "CR": 53.333333333333336,
+    "MX": 53.086419753086425,
+    "RO": 48.275862068965516,
+    "BR": 44.936708860759495,
+    "DE": 43.0,
+    "US": 40.35030814142069,
+    "SE": 38.46153846153847,
+    "NL": 38.23529411764706,
+    "AU": 37.66816143497758,
+    "PL": 36.486486486486484,
+    "RU": 35.77981651376147,
+    "JP": 34.21052631578947,
+    "CA": 32.68365817091454,
+    "IN": 31.25,
+    "NZ": 30.76923076923077,
+    "GB": 29.464285714285715,
+    "FI": 28.57142857142857,
+    "FR": 23.91304347826087,
+    "UY": 17.24137931034483,
+    "CY": 16.216216216216218,
+    "AR": 15.384615384615385
   },
   "category_correlations": [
     {
@@ -61,7 +71,13 @@
       "perspective": "persp_sexually_explicit",
       "pearson": 0.554,
       "spearman": 0.346
+    },
+    {
+      "openai": "openai_hate_threatening",
+      "perspective": "persp_threat",
+      "pearson": 0.361,
+      "spearman": 0.663
     }
   ],
-  "generated_at": "2025-09-12T15:37:07.107107Z"
+  "generated_at": "2025-09-13T14:30:43.833158Z"
 }
