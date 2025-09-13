@@ -6,7 +6,14 @@ from datetime import datetime
 
 # ===== CONFIGURATION =====
 BOARD = "pol"  # 4chan board to scrape
-OUTPUT_FILE = f"{BOARD}_posts_raw.json"  # raw data file
+
+# Base paths
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+OUTPUT_FILE = os.path.join(DATA_DIR, f"{BOARD}_posts_raw.json")  # raw data file
+
 RATE_LIMIT_SECONDS = 1
 MAX_POSTS = 10000  # Stop after collecting this many posts
 
