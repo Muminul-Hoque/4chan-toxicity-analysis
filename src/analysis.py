@@ -256,4 +256,25 @@ with open(os.path.join(SUMMARY_DIR, "analysis_summary.json"), "w", encoding="utf
     json.dump(summary, f, indent=2)
 logger.info("Saved analysis_summary.json")
 
+# ===== SCATTERPLOT: OpenAI vs Perspective =====
+if not args.fast:
+    plt.figure(figsize=(7, 7))
+    sns.scatterplot(
+        x=df["openai_toxicity"],
+        y=df["persp_toxicity"],
+        alpha=0.4,
+        s=20,
+        edgecolor=None
+    )
+    plt.xlabel("OpenAI Toxicity Score")
+    plt.ylabel("Perspective Toxicity Score")
+    plt.title("OpenAI vs Perspective Toxicity Scores", fontsize=14, weight="bold")
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
+    plt.tight_layout()
+    plt.savefig(os.path.join(RESULTS_DIR, "scatter_toxicity.png"), dpi=300, bbox_inches="tight")
+    plt.close()
+    logger.info("Saved scatter_toxicity.png")
+
+
 logger.info("✅ Analysis complete. Results saved into /results, /tables, and /summary")
