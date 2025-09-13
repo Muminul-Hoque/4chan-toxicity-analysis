@@ -88,7 +88,13 @@ The pipeline was designed to demonstrate **end-to-end research competencies**: e
 git clone https://github.com/muminul-hoque/4chan-toxicity-analysis.git
 cd 4chan-toxicity-analysis
 ```
-### 2. Create a virtual environment
+## 2. Configure API keys:
+Create a .env file in the root directory:
+```env
+OPENAI_API_KEY=your_openai_api_key
+PERSPECTIVE_API_KEY=your_google_perspective_api_key
+```
+### 3. Create a virtual environment
 #### For Linux/macOS:
 ```bash
 python3 -m venv venv
@@ -99,15 +105,9 @@ source venv/bin/activate
 python -m venv venv
 venv\Scripts\activate
 ```
-## 3. Install dependencies:
+## 4. Install dependencies:
 ```
 pip install -r requirements.txt
-```
-## 4. Configure API keys:
-Create a .env file in the root directory:
-```env
-OPENAI_API_KEY=your_openai_api_key
-PERSPECTIVE_API_KEY=your_google_perspective_api_key
 ```
 
 ## 5. Run the pipeline:
