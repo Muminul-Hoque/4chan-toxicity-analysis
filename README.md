@@ -63,10 +63,8 @@ The pipeline was designed to demonstrate **end-to-end research competencies**: e
 ├── tables/
 │   ├── disagreement_by_op.csv
 │   ├── disagreement_by_country.csv
-│   ├── disagreement_by_subject.csv
 │   ├── disagreement_by_op.md
 │   ├── disagreement_by_country.md
-│   └── disagreement_by_subject.md
 │   └── precision_recall_table.md
 │   └── precision_recall_table.md
 │
