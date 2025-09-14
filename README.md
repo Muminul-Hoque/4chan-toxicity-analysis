@@ -63,10 +63,8 @@ The pipeline was designed to demonstrate **end-to-end research competencies**: e
 ├── tables/
 │   ├── disagreement_by_op.csv
 │   ├── disagreement_by_country.csv
-│   ├── disagreement_by_subject.csv
 │   ├── disagreement_by_op.md
 │   ├── disagreement_by_country.md
-│   └── disagreement_by_subject.md
 │   └── precision_recall_table.md
 │   └── precision_recall_table.md
 │
@@ -154,6 +152,17 @@ python src/main.py
 - **Summary JSON**: `/summary/analysis_summary.json`  
 
 ---
+## 📊 Key Results
+- Strong correlation between OpenAI and Perspective toxicity scores: Pearson’s r = 0.745, Spearman’s ρ = 0.820.
+- Highest disagreement rates in India (31.25%), Costa Rica (26.67%), and Norway (23.33%).
+- OP posts show higher disagreement (20.9%) than replies (17.85%).
+
+![Scatterplot of OpenAI vs Perspective toxicity scores](results/scatter_toxicity.png)
+
+![Overall toxicity score distributions for OpenAI and Perspective](results/toxicity_distributions.png)
+
+*Figure: Distribution of toxicity scores for both APIs. Perspective shows a heavier tail toward high scores, while OpenAI’s distribution is more centered, indicating calibration differences.*
+
 
 ## 🤖 Generative AI Usage  
 This project used **Microsoft Copilot** and **OpenAI ChatGPT** for:  
