@@ -37,6 +37,7 @@ The pipeline was designed to demonstrate **end-to-end research competencies**: e
 ├── results/                          # Visual outputs from analysis
 │   ├── correlation_heatmap.png
 │   ├── agreement_matrix.png
+│   ├── confusion_matrix.png
 │   ├── toxicity_distributions.png
 │   ├── openai_toxicity_distribution.png
 │   ├── openai_hate_distribution.png
@@ -59,6 +60,7 @@ The pipeline was designed to demonstrate **end-to-end research competencies**: e
 │   ├── persp_sexually_explicit_distribution.png
 │   ├── persp_spam_distribution.png
 │   ├── persp_flirtation_distribution.png
+│   ├── scatter_toxicity.png
 │
 ├── tables/
 │   ├── disagreement_by_op.csv
