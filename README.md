@@ -1,5 +1,5 @@
-# 🧠 4chan Toxicity Analysis  
-**Yang Lab Screening Task – September 2025**
+# 4chan Toxicity Analysis  
+
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
 ![Git](https://img.shields.io/badge/Version%20Control-Git-orange?logo=git)
@@ -14,7 +14,7 @@ This repository presents a **complete research pipeline** for analyzing toxic sp
 - **OpenAI Moderation API** (context-sensitive, neural moderation)  
 - **Google Perspective API** (linguistic toxicity scoring across categories)  
 
-The pipeline was designed to demonstrate **end-to-end research competencies**: ethical data collection, API integration, quantitative analysis, visualization, and reproducible reporting — all aligned with the expectations for computational social science in the **Yang Lab**.  
+The pipeline was designed to demonstrate **end-to-end research competencies**: ethical data collection, API integration, quantitative analysis, visualization, and reproducible reporting.
 
 ---
 
@@ -145,16 +145,10 @@ python src/main.py
 - Do the systems capture **different toxicity dimensions**?  
 - What methodological challenges arise when combining moderation APIs?  
 
----
 
-## 📑 Deliverables  
-- **Report**: `4chan_toxicity_research_report_Muhamed_Muminul_Hoque.pdf`  
-- **Visual Outputs**: `/results/`  
-- **Tabular Results**: `/tables/`  
-- **Summary JSON**: `/summary/analysis_summary.json`  
 
 ---
-## 📊 Key Results
+##  Key Results
 - Strong correlation between OpenAI and Perspective toxicity scores: Pearson’s r = 0.745, Spearman’s ρ = 0.820.
 - Highest disagreement rates in India (31.25%), Costa Rica (26.67%), and Norway (23.33%).
 - OP posts show higher disagreement (20.9%) than replies (17.85%).
@@ -166,7 +160,7 @@ python src/main.py
 *Figure: Distribution of toxicity scores for both APIs. Perspective shows a heavier tail toward high scores, while OpenAI’s distribution is more centered, indicating calibration differences.*
 
 
-## 🤖 Generative AI Usage  
+## Generative AI Usage  
 This project used **Microsoft Copilot** and **OpenAI ChatGPT** for:  
 - Debugging assistance  
 - Documentation drafting  
@@ -176,14 +170,16 @@ All AI outputs were **reviewed and validated**. Analysis, interpretation, and re
 
 ---
 
-## 🔐 Ethics & Privacy  
+## Ethics & Privacy  
 - Data collected from **public 4chan endpoints** following platform rules  
 - No private user data accessed or stored  
 - Toxicity analysis conducted **solely for research**  
 - API keys and credentials are **excluded from version control**  
 
 ---
+## Acknowledgements
+- This project was inspired by Professor Kai-Cheng Yang. All implementation and analysis were conducted independently.
 
-## 📬 Contact
+## Contact
 For questions or collaboration, please reach out via email:  
 **yang3kc@gmail.com** **muminul951@gmail.com**
