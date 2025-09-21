@@ -178,7 +178,7 @@ All AI outputs were **reviewed and validated**. Analysis, interpretation, and re
 
 ---
 ## Acknowledgements
-- This project was inspired by Professor Kai-Cheng Yang. All implementation and analysis were conducted independently.
+- This project was inspired & reviewed by Professor Kai-Cheng Yang. All implementation and analysis were conducted independently.
 
 ## Contact
 For questions or collaboration, please reach out via email:  
