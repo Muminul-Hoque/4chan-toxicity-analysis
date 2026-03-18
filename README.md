@@ -18,6 +18,9 @@ The pipeline was designed to demonstrate **end-to-end research competencies**: e
 
 ---
 
+## 📄 Research Report
+A full research report is available in this repository:
+👉 [4chan_toxicity_research_report.pdf](./4chan_toxicity_research_report_Muhamed_Muminul_Hoque_pdf.pdf)
 
 ## 📁 Repository Structure
 ```
@@ -176,6 +179,12 @@ All AI outputs were **reviewed and validated**. Analysis, interpretation, and re
 - Toxicity analysis conducted **solely for research**  
 - API keys and credentials are **excluded from version control**  
 
+---
+## 📎 Citation
+If you use this work, please cite:
+Hoque, M. M. (2025). *Comparative Toxicity Analysis of 4chan's /pol/ Board 
+Using OpenAI Moderation and Google Perspective APIs*. GitHub Repository.
+https://github.com/Muminul-Hoque/4chan-toxicity-analysis
 ---
 ## Acknowledgements
 - This project was inspired & reviewed by Professor Kai-Cheng Yang. All implementation and analysis were conducted independently.
